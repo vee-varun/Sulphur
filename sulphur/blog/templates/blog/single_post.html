@@ -1,0 +1,19 @@
+{% extends 'sadmin/admin_layout.html' %}
+
+{% block style %}
+<style>
+    p{
+        text-align: justify;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <p>{{single_post.pub_date}} By {{single_post.author.display_name}} </p>
+    <h1> {{single_post.title}} </h1>
+    <img src="{{ single_post.cover_pic.url }}" alt="" height="100%" width="500px">
+    {{single_post.content | safe}}
+</div>
+
+{% endblock %}

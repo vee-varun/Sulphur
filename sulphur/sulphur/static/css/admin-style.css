@@ -1,0 +1,10 @@
+#admin-panel{
+    background-color: #FFC800;
+    min-height: 40px;
+}
+
+#admin-panel p{
+    font-size: 18px;
+    color: white;
+    margin-top: 10px;
+}

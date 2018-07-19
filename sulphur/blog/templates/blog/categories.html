@@ -1,0 +1,58 @@
+{% extends 'sadmin/admin_layout.html' %}
+
+{% block styles %}
+<style>
+    h2{
+        color: #5BC0DE;
+    }
+    .action-keys{
+        color: #5BC0DE;
+        font-size: 14px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2 class="text-center">Hello {{request.session.display_name}}</h2>
+    <h3>Categories &nbsp; <a href="{% url 'blog:add_category' %}" class="btn btn-info">Add New Category</a></h3>  
+    <hr>
+</div>
+
+<div class="container">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>ID</th>    
+                <th>Name</th>
+                <th>Description</th>
+                <th>Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for category in category_list %}
+            
+                <tr>
+                    <td>{{category.id}}</td>
+                    <td>{{category.name}}
+                        <br>
+                        <span class="action-keys">
+                            <a href="{%url 'blog:del_category' category_id=category.id%}">delete</a>
+                            |
+                            <a href="{% url 'blog:edit_category' category_id=category.id category_url=category.url %}">edit</a>
+                            |
+                            {% if category.unlisted == 1 %}
+                                <a href="{% url 'blog:publish_category' category_id=category.id %}">publish</a>
+                            {% else %}
+                                <a href="{% url 'blog:unpublish_category' category_id=category.id %}">unpublish</a>
+                            {% endif %}
+                        </span>
+                    </td>
+                    <td> {{category.description}} </td>
+                    <td> {{category.date_created}} </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+        </table>
+</div>
+{% endblock %}

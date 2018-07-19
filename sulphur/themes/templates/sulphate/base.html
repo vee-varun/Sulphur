@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>
+            {% block page_title %}
+            {% endblock %}
+        </title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+
+        {% block metas %}
+        {% endblock %}
+
+        {% load staticfiles %}
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+        <link rel="stylesheet" href="{% static 'css/main-style.css' %}">
+
+        <!-- Google Font Family -->
+        <link href="https://fonts.googleapis.com/css?family=Lato|Open+Sans|Raleway|Roboto" rel="stylesheet">
+        
+        {% block css_files %}
+        {% endblock %}
+
+        {% block styles %}
+        <style>
+    #header1{
+        background-image: url({{page.cover_pic.url}});
+        border: 1px Solid Black;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-position: center;
+        background-size: cover;
+        position: relative;
+        overflow: hidden;
+    }
+    #header-title{
+        position: relative;
+        top: 500px;
+        left: 100px;
+        color: White;
+        font-weight: 700;
+        font-size: 48px;
+    }
+    #header1 p{
+        color: White;
+        position: relative;
+        top: 500px;
+        left: 120px;
+        font-size: 18px;
+    }
+
+    /* Categories */
+    #categories{
+        margin-top: 100px;
+    }
+    #categories h1{
+        padding-bottom: 50px;
+    }
+
+    /* Category cards CSS */
+    .card {
+        box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+        transition: 0.3s;
+    }
+    .card:hover {
+        box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+    }
+    .card-body{
+        padding: 10px;
+    }
+</style>
+        {% endblock %}
+    </head>
+    <body>
+            <nav class="navbar navbar-inverse navbar-fixed-top">
+                <div class="container-fluid">
+                    <div class="navbar-header">
+                    <a class="navbar-brand" href="#">Sulphur</a>
+                    </div>
+                    <ul class="nav navbar-nav navbar-right">
+                    <li class="active"><a href="#">Home</a></li>
+                    <li><a href="/#categories">Categories</a></li>
+                    </ul>
+                </div>
+            </nav>
+
+        {% block content %}
+        <div class="container-flex">
+    <section id="header1">
+        <h1 id='header-title'>{{page.title}}</h1>
+        {{page.content|safe}}
+    </section>
+    <div class="container">
+        {% load staticfiles %}
+        <section id='categories'>
+            <h1 class="text-center">All Categories</h1>
+            <div class="row">
+            {% for category in categories %}
+                <a href="{% url 'themes:cat' category_id=category.id category_name=category.url %}">
+                    <div class="col-md-4">
+                        <div class="card">
+                            <img class="card-img-top" src="{{ category.cover_pic.url }}" alt="Card image" width="100%">
+                            <div class="card-body">
+                                <h4 class="card-title">{{category.name}}</h4>
+                                <p class="card-text">Manage all your posts</p>
+                            </div>
+                        </div>  
+                    </div>
+                </a>
+            {% endfor %}
+            </div>
+        </section>
+    </div>
+</div>
+        {% endblock %}
+
+        <footer>
+            <div class="container-fluid">
+                <p class="text-center">Copyright &copy; 2018 Sulphur Project</p>
+                <h2 class="color text-center">Sulphur</h2>
+            </div>
+        </footer>
+
+        {% load staticfiles %}
+        <!-- Latest compiled and minified JavaScript -->
+        <script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+        <script src="{% static 'js/bootstrap.min.js' %}"></script>
+
+        {% block js_files %}
+        {% endblock %}
+
+        {% block scripts %}
+        <script>
+        $(document).ready(function(){
+            $('#header1').css({
+                height: $(window).height()
+            })
+
+            $('#header-title').css({
+                top: $(window).height() - 300
+            })
+
+            $('#header1 p').css({
+                top: $(window).height() - 300
+            })
+        });
+    </script>
+        {% endblock %}
+    </body>
+</html>

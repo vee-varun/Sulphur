@@ -1,0 +1,44 @@
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<style>
+    p{
+        text-align: justify;
+    }
+</style>
+
+<h1>I'm Single Category Page</h1>
+
+<h1>{{category_obj.name}}</h1>
+
+
+<div class="container">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Author</th>
+            <th>Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for record in category_posts %}
+                <tr>
+                    <td>
+                        <a href="{% url 'blog:single_post' cat=record.category.url post_id=record.id post_title=record.url%}">
+                            <b>{{record.title}}</b>
+                        </a>
+                            <br> <span class="action-keys">delete | edit | unpublish</span>
+                    </td>
+                    <td> {{record.description}}</td>
+                    <td> {{record.author.display_name}} </td>
+                    <td> {{record.pub_date}} </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>

@@ -1,0 +1,18 @@
+{% extends 'sulphate/base.html' %}
+
+{% block styles %}
+<style>
+    #body{
+        margin-top: 60px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+
+<div class="container" id="body">
+    <h1> {{post.title}} </h1>
+    {{post.content|safe}}
+</div>
+
+{% endblock %}

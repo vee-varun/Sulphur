@@ -1,0 +1,65 @@
+{% extends 'sadmin/admin_layout.html' %}
+
+{% block styles %}
+<style>
+    h2{
+        color: #5BC0DE;
+    }
+    .action-keys{
+        color: #5BC0DE;
+        font-size: 14px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container" id="list-heading">
+    <h3>Pages &nbsp; <a href="{% url 'blog:add_page' %}" class="btn btn-info">Add new Page</a></h3>
+    <hr>
+</div>
+
+<div class="container">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Title</th>
+                <th>Keywords</th>
+                <th>Description</th>
+                <th>Author</th>
+                <th>Date</th>
+                <th>Last Modified</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for page in page_list %}
+                <tr>
+                    <td>{{page.id}}</td>
+                    <td>
+                        <a href="{% url 'blog:view_page' page_url=page.url %}">
+                            <b>{{page.title}}</b>
+                        </a>
+                        <br>
+                        <span class="action-keys"> 
+                            <a href="{% url 'blog:delete_page' page_id=page.id %}">delete</a>
+                            |
+                            <a href="{% url 'blog:edit_page' page_id=page.id %}">edit</a>
+                            |
+                            {% if page.unlisted == 1 %}
+                                <a href="{% url 'blog:publish_page' page_id=page.id %}">publish</a>
+                            {% else %}
+                                <a href="{% url 'blog:unpublish_page' page_id=page.id %}">unpublish</a>
+                            {% endif %}
+                        </span>
+                    </td>
+                    <td> {{page.keywords}} </td>
+                    <td> {{page.description}} </td>
+                    <td> {{page.author.display_name}} </td>
+                    <td> {{page.pub_date}} </td>
+                    <td> {{page.last_modified}} </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

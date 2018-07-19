@@ -1,0 +1,64 @@
+{% extends 'sadmin/admin_layout.html' %}
+
+
+{% block styles %}
+<style>
+    h2{
+        color: #5BC0DE;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container" id="list-heading">
+    <h3>All Posts &nbsp; <a href="{% url 'blog:add_post' %}" class="btn btn-info">Add New Post</a></h3>  
+    <hr>
+</div>
+
+<div class="container">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Category</th>
+                <th>Author</th>
+                <th>Date</th>
+                <th>Last Modified</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for record in record_list %}
+            
+                <tr>
+                    <td> {{record.id}} </td>
+                    <td>
+                        <a href="{% url 'blog:single_post' cat=record.category.url post_id=record.id post_title=record.url%}">
+                            <b>{{record.title}}</b>
+                        </a>
+                        <br>
+                        <span class="action-keys">
+                            <a href="{%url 'blog:del_post' post_id=record.id%}"> delete </a>
+                            | 
+                            <a href="{% url 'blog:edit_post' cat=record.category.url post_id=record.id post_url=record.url%}">edit</a>
+                            |
+                            {% if record.unlisted == 1 %}
+                                <a href="{% url 'blog:publish_post' post_id=record.id %}">publish</a>
+                            {% else %}
+                                <a href="{% url 'blog:unpublish_post' post_id=record.id %}">unpublish</a>
+                            {% endif %}
+                        </span>
+                    </td>
+                    <td> {{record.description}}</td>
+                    <td> {{record.category.name}} </td>
+                    <td> {{record.author.display_name}} </td>
+                    <td> {{record.pub_date}} </td>
+                    <td> {{record.last_modified}} </td>
+                </tr>
+            {% endfor %}
+            
+        </tbody>
+    </table>
+</div>
+{% endblock %}

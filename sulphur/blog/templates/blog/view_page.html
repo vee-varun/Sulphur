@@ -1,0 +1,17 @@
+{% extends 'sadmin/admin_layout.html' %}
+
+{% block styles %}
+<style>
+    p{
+        text-align: justify;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1> {{page_obj.title}} </h1>
+    <hr>
+    {{page_obj.content | safe}}
+</div>
+{% endblock %}

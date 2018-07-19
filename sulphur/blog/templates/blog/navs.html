@@ -1,0 +1,55 @@
+{% extends 'sadmin/admin_layout.html' %}
+
+{% block styles %}
+<style>
+    h2{
+        color: #5BC0DE;
+    }
+    .action-keys{
+        color: #5BC0DE;
+        font-size: 14px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container" id="list-heading">
+    <h3>Navbar Links &nbsp; <a href="{% url 'blog:add_nav' %}" class="btn btn-info">Add Nav Links</a></h3>
+</div>
+<div class="container">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Linked to</th>
+                <th>Added By</th>
+                <th>Date Added</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for nav in nav_links %}
+                <tr>
+                    <td><b>{{nav.title}}</b></td>
+                    <td>
+                        <a href="{{nav.url}}">{{nav.url}}</a>
+                        <br>
+                        <span class="action-keys">
+                            <a href="{% url 'blog:delete_nav' nav_id=nav.id %}">delete</a>
+                            |
+                            <a href="{% url 'blog:edit_nav' nav_id=nav.id %}">edit</a>
+                            |
+                            {% if nav.unlisted == 1 %}
+                                <a href="{% url 'blog:publish_nav' nav_id=nav.id %}">publish</a>
+                            {% else %}
+                                <a href="{% url 'blog:unpublish_nav' nav_id=nav.id %}">unpublish</a>
+                            {% endif %}
+                        </span>
+                    </td>
+                    <td> {{nav.author.display_name}} </td>
+                    <td> {{nav.pub_date}} </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

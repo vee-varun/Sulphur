@@ -1,0 +1,44 @@
+{% extends 'sulphate/base.html' %}
+
+{% block styles %}
+<style>
+    #cat-header{
+        height: 500px;
+        background-image: url({{category.cover_pic.url}});
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+    #posts h1{
+        padding-top: 50px;
+        padding-bottom: 50px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+    <div id='cat-header'>
+    </div>
+
+    <div class="container">
+        {% load staticfiles %}
+        <section id='posts'>
+            <h1 class="text-center"> {{category.name}} </h1>
+            <div class="row">
+            {% for post in posts %}
+                <a href="{% url 'themes:post' category_name=category.url post_id=post.id post_title=post.url %}">
+                    <div class="col-md-4">
+                        <div class="card">
+                            <img class="card-img-top" src="{{ post.cover_pic.url }}" alt="Card image" width="100%">
+                            <div class="card-body">
+                                <h4 class="card-title">{{post.title}}</h4>
+                            </div>
+                        </div>  
+                    </div>
+                </a>
+            {% endfor %}
+            </div>
+        </section>
+    </div>
+
+{% endblock %}
